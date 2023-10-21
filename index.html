@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+    <title>Hexatime</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="Keywords" content="Jacopo Col&ograve;, Jacopo Colo, hex, clock, hexadecimal, colors" />
+    <meta name="description" content="A precise hexadecimal color clock that goes the whole 24 hours color range, from #000000 to #235959.">
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <!--<script src="https://assets.digitalclimatestrike.net/widget.js" async></script-->
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <style>
+        html body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        #hex, #clock {
+            color: white;
+            font-family: 'Lato', Helvetiva, Arial, sans-serif;
+            text-align: center;
+            font-size: 4.5em;
+            display: block;
+            min-width: 200px;
+            font-weight: 200;
+        }
+
+        #clock {
+            margin-bottom: 20px;
+        }
+
+        #date{
+            color: white;
+            font-family: 'Lato', Helvetiva, Arial, sans-serif;
+            display: block;
+            font-weight: 1;
+        }
+        .absolute-center {
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .date-container {
+            position: absolute;
+            bottom: auto; /* Ajustez la position verticale selon vos préférences */
+            right: 10px; /* Ajustez la position horizontale selon vos préférences */
+        }
+
+        .background {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="background">
+    <div class="absolute-center">
+        <p id="clock"></p>
+        <p id="hex"></p>
+    </div>
+    <!-- Ajout de l'élément pour la date -->
+    <div class="date-container">
+        <p id="date"></p>
+    </div>
+</div>
+
+<script>
+    function refreshData() {
+        var x = 1;  // x = seconds
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var s = d.getSeconds();
+
+        if (h <= 9) { h = '0' + h };
+        if (m <= 9) { m = '0' + m };
+        if (s <= 9) { s = '0' + s };
+
+        var color = '#' + h + m + s;
+        $("div.background").css("background-color", color);
+        $("p#hex").text(color);
+
+        // Affichage de l'horloge
+        var timeString = h + ':' + m + ':' + s;
+        $("p#clock").text(timeString);
+
+        // Affichage de la date
+        var dateString = d.toLocaleDateString();
+        $("p#date").text(dateString);
+
+        setTimeout(refreshData, x * 1000);
+    }
+
+    refreshData(); // exécution de la fonction
+</script>
+</body>
+</html>
